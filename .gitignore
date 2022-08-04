@@ -1,0 +1,4 @@
+/.venv
+/.vscode
+/ab_nyc.sqlite3
+/__pycache__
