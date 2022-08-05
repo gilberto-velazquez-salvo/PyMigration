@@ -9,3 +9,6 @@ Models/__pycache__/currency.cpython-310.pyc
 Models/__pycache__/exchangePlatform.cpython-310.pyc
 Models/__pycache__/platformExchangePair.cpython-310.pyc
 Models/__pycache__/setOfRequest.cpython-310.pyc
+Models/__pycache__/bitfin_ticker.cpython-310.pyc
+Models/__pycache__/cexio_ticker.cpython-310.pyc
+BasicProvitioning/__pycache__/createSchemaDB.cpython-310.pyc

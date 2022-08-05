@@ -1,4 +1,5 @@
 from ctypes.wintypes import DOUBLE
+from decimal import Decimal
 from sqlalchemy import DECIMAL, TIMESTAMP, Boolean, Column, Date, Float, Integer, String, create_engine, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.orm import sessionmaker
@@ -34,6 +35,7 @@ class setOfRequest(Base):
     id = Column(Integer, primary_key=True)
     timestamp=Column(TIMESTAMP)
     requestTimestamp=relationship("bidPrice")
+    bidPricePlatform=relationship("bitfin_ticker")
 
 class platformExchangePair(Base):
     __tablename__ = 'platformExchangePair'
@@ -43,6 +45,7 @@ class platformExchangePair(Base):
     currencyB_id=Column(Integer, ForeignKey("currency.id"))
     pairSymbol = Column(String(200))
     bidPricePlatform=relationship("bidPrice")
+    
 
 class bidPrice(Base):
     __tablename__ = 'bidPrice'
@@ -55,6 +58,39 @@ class bidPrice(Base):
     lowPrice=Column(DECIMAL(16,9))
     highPrice=Column(DECIMAL(16,9))
     volumePrice=Column(DECIMAL(16,9))
+
+
+class bitfin_ticker(Base):
+    __tablename__='bitfin_ticker'
+    id=Column(Integer, primary_key=True)
+    symbol=Column(String(100))
+    bid=Column(DECIMAL(20,3))
+    bid_size=Column(DECIMAL(20,3))
+    ask=Column(DECIMAL(20,3))
+    ask_size=Column(DECIMAL(20,3))
+    daily_change=Column(DECIMAL(20,3))
+    daily_change_relative=Column(DECIMAL(20,3))
+    last_price=Column(DECIMAL(20,3))
+    volume=Column(DECIMAL(20,3))
+    high=Column(DECIMAL(20,3))
+    low=Column(DECIMAL(20,3))
+    setOfRequest_id = Column(Integer, ForeignKey("setOfRequest.id"))
+
+
+class cexio_ticker(Base):
+    __tablename__='cexio_ticker'
+    id=Column(Integer, primary_key=True)   
+    symbol=Column(String(100))
+    low=Column(DECIMAL(20,3))
+    high=Column(DECIMAL(20,3))
+    last=Column(DECIMAL(20,3))
+    volume=Column(DECIMAL(20,3))
+    volume30d=Column(DECIMAL(20,3))
+    priceChange=Column(DECIMAL(20,3))
+    priceChangePercentage= Column(DECIMAL(20,3))
+    bid=Column(DECIMAL(20,3))
+    ask=Column(DECIMAL(20,3))
+    setOfRequest_id = Column(Integer, ForeignKey("setOfRequest.id"))
 
 
 Base.metadata.create_all(engine)

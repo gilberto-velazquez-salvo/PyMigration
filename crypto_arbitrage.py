@@ -1,11 +1,11 @@
-import globalConfig as config;
-import mysql.connector;
 import databaseConnection as connector;
 import requests
 import json
+import helper
 
 def main():
     validCurrenciesSymbol=[]
+    
     """Get info from database"""
     #get platformExchangePair
     platformExchange=connector.getPlaftormExchangePair()
@@ -16,34 +16,27 @@ def main():
         validCurrenciesSymbol.append(curren.symbol)
     #get exchange platform
     exchangePlatform=connector.getExchangePlatform()
-    
+
+    #Store the timestamp of request
+    connector.storeStimestamp()
+
+    idSetOfRequest=connector.getLatestSetOfRequest()
+
+    #possible combinations of currencies for bitfinex
+    arrayOfCurrencies=helper.generateCombinations(validCurrenciesSymbol,True)
+
+
     """Get info from API"""
-    url_bitfinex='https://api-pub.bitfinex.com/v2/tickers?symbols=ALL'
-    response_bitfinex = requests.get(url_bitfinex)
-    
-    if response_bitfinex.ok:
-        data = response_bitfinex.text
-        jsonBitFinex = json.loads(data)
-    else:
-        print('Error getting info from bitfinex')
+    jsonOfBitfinex=helper.getInfofromBitfinex(arrayOfCurrencies)
+    jsonOfCexio=helper.getInfofromCexio(validCurrenciesSymbol)
 
-    url_kraken='https://api.kraken.com/0/public/Ticker?pair='+",".join(validCurrenciesSymbol)
-    response_kraken = requests.get(url_kraken)
 
-    if response_kraken.ok:
-        data_kraken = response_kraken.text
-        json_kraken = json.loads(data_kraken)
-    else:
-        print('Error getting info from bitfinex')
 
-    url_cexio='https://cex.io/api/tickers/'+"/".join(validCurrenciesSymbol)
-    response_cexio = requests.get(url_kraken)
+    #Save info to database
+    connector.persistBitfinex(jsonOfBitfinex)
+    connector.persistCexio(helper.generateCombinations(validCurrenciesSymbol,False),jsonOfCexio)
 
-    if response_cexio.ok:
-        data_cexio = response_cexio.text
-        json_cexio = json.loads(data_cexio)
-    else:
-        print('Error getting info from bitfinex')
+
 
 
     if jsonBitFinex and json_kraken and json_cexio:
