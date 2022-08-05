@@ -2,14 +2,14 @@
 import mysql.connector
 from mysql.connector import Error
 
-import configuration
+import globalConfig
 
 def getBasicInformation(query):
     try:
-        connection = mysql.connector.connect(host=configuration.MYSQL_HOST,
-                                            database=configuration.MYSQL_DATABASE,
-                                            user=configuration.MYSQL_USER,
-                                            password=configuration.MYSQL_PASS)
+        connection = mysql.connector.connect(host=globalConfig.MYSQL_HOST,
+                                            database=globalConfig.MYSQL_DATABASE,
+                                            user=globalConfig.MYSQL_USER,
+                                            password=globalConfig.MYSQL_PASS)
         if connection.is_connected():
             #db_Info = connection.get_server_info()
             #print("Connected to MySQL Server version ", db_Info)
@@ -28,4 +28,4 @@ def getBasicInformation(query):
 
 
 if __name__ == "__main__":
-    getBasicInformation(configuration.BASIC_QUERIES["GetPlaftormExchange"])
+    getBasicInformation(globalConfig.BASIC_QUERIES["GetPlaftormExchange"])

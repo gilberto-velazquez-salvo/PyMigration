@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Date, Float, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import configuration as config
+import globalConfig as config
 from sqlalchemy import create_engine
 
 connection_string="mysql+pymysql://"+config.MYSQL_USER+":"+config.MYSQL_PASS+"@"+config.MYSQL_HOST+":"+config.MYSQL_PORT+"/"+config.MYSQL_DATABASE

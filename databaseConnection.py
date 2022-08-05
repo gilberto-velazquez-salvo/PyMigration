@@ -14,6 +14,23 @@ engine = create_engine(connection_string)
 
 Session = sessionmaker(bind=engine)
 
+def getPlaftormExchangePair():
+        with Session() as session:
+        #currencies=session.query(currency).filter(currency.name=="BITCOIN").all()
+            return session.query(platformExchangePair).all()
+
+def getCurrencies():
+        with Session() as session:
+            return session.query(currency).all()
+
+def getValidCurrencies():
+        with Session() as session:
+            return session.query(currency).filter(currency.scan==1).all()
+
+def getExchangePlatform():
+        with Session() as session:
+            return session.query(exchangePlatform).all()
+
 
 with Session() as session:
     #currencies=session.query(currency).filter(currency.name=="BITCOIN").all()
@@ -24,3 +41,5 @@ with Session() as session:
     for movie in currencies:
         print(f'{movie.symbol} name')
     print('')
+
+

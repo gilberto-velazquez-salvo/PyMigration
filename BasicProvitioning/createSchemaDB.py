@@ -1,5 +1,5 @@
 from ctypes.wintypes import DOUBLE
-from sqlalchemy import DECIMAL, TIMESTAMP, Column, Date, Float, Integer, String, create_engine, ForeignKey
+from sqlalchemy import DECIMAL, TIMESTAMP, Boolean, Column, Date, Float, Integer, String, create_engine, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.orm import sessionmaker
 import configuration as config
@@ -15,9 +15,11 @@ class currency(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(200))
     symbol = Column(String(10))
-    def __init__(self, name, symbol):
+    scan = Column (Integer)
+    def __init__(self, name, symbol, scan):
         self.name = name
         self.symbol = symbol
+        self.scan = scan
 
 class exchangePlatform(Base):
     __tablename__ = 'exchangePlatform'

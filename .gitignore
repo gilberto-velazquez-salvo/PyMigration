@@ -2,3 +2,10 @@
 /.vscode
 /ab_nyc.sqlite3
 /__pycache__
+BasicProvitioning/__pycache__/configuration.cpython-310.pyc
+BasicProvitioning/__pycache__/createSchemaDB.cpython-310.pyc
+Models/__pycache__/bidPrice.cpython-310.pyc
+Models/__pycache__/currency.cpython-310.pyc
+Models/__pycache__/exchangePlatform.cpython-310.pyc
+Models/__pycache__/platformExchangePair.cpython-310.pyc
+Models/__pycache__/setOfRequest.cpython-310.pyc
