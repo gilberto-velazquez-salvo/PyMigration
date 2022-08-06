@@ -1,7 +1,10 @@
 import databaseConnection as connector;
-import requests
-import json
 import helper
+import time
+
+def executeForever():
+    main()
+    time.sleep(10)
 
 def main():
     validCurrenciesSymbol=[]
@@ -39,15 +42,11 @@ def main():
 
 
 
-    if jsonBitFinex and json_kraken and json_cexio:
-        print ('ok')
-    else:
-        print ('missing parameters, ending process in request: ')
-    print("ended")
-
-
 
 
 
 if __name__ == "__main__":
+    # Recursive execution
+    #while True:
+    #    executeForever()
     main()
