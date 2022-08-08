@@ -38,3 +38,15 @@ def getInfofromCexio(validCurrenciesSymbol):
     else:
         print('Error getting info from cex.io')
 
+
+def getInfofromKraken(currencyToCheck):
+    url_kraken='https://api.kraken.com/0/public/Ticker?pair='+currencyToCheck
+    response_kraken = requests.get(url_kraken)
+    
+    if response_kraken.ok:
+        data = response_kraken.text
+        jsonResponse= json.loads(data)
+        return jsonResponse
+    else:
+        print('Error getting info from kraken with the currency: '+currencyToCheck)
+

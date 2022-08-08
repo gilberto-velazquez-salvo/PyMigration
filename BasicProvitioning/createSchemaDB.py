@@ -11,6 +11,12 @@ connection_string="mysql+pymysql://"+config.MYSQL_USER+":"+config.MYSQL_PASS+"@"
 engine = create_engine(connection_string)
 Base = declarative_base()
 
+class setOfRequest(Base):
+    __tablename__ = 'setOfRequest'
+    id = Column(Integer, primary_key=True)
+    timestamp=Column(TIMESTAMP)
+    requestTimestamp=relationship("bidPrice")
+    bidPricePlatform=relationship("bitfin_ticker")
 class currency(Base):
     __tablename__ = 'currency'
     id = Column(Integer, primary_key=True)
@@ -29,13 +35,6 @@ class exchangePlatform(Base):
     platformExchangePairs=relationship("platformExchangePair")
     def __init__(self, name):
         self.name = name
-
-class setOfRequest(Base):
-    __tablename__ = 'setOfRequest'
-    id = Column(Integer, primary_key=True)
-    timestamp=Column(TIMESTAMP)
-    requestTimestamp=relationship("bidPrice")
-    bidPricePlatform=relationship("bitfin_ticker")
 
 class platformExchangePair(Base):
     __tablename__ = 'platformExchangePair'
@@ -90,6 +89,27 @@ class cexio_ticker(Base):
     priceChangePercentage= Column(DECIMAL(20,12))
     bid=Column(DECIMAL(20,12))
     ask=Column(DECIMAL(20,12))
+    setOfRequest_id = Column(Integer, ForeignKey("setOfRequest.id"))
+
+
+class kraken_ticker(Base):
+    __tablename__='kraken_ticker'
+    id=Column(Integer, primary_key=True)   
+    symbol=Column(String(100))
+    ask=Column(DECIMAL(20,12))
+    ask_whole_volume=Column(DECIMAL(20,12))
+    ask_lot_volume=Column(DECIMAL(20,12))
+    bid=Column(DECIMAL(20,12))
+    bid_whole_volume=Column(DECIMAL(20,12))
+    bid_lot_volume=Column(DECIMAL(20,12))
+    last_trade_price=Column(DECIMAL(20,12))
+    last_trade_volume=Column(DECIMAL(20,12))
+    volume=Column(DECIMAL(20,12))
+    volume_weighted_average_price=Column(DECIMAL(20,12))
+    trades=Column(DECIMAL(20,12))
+    low=Column(DECIMAL(20,12))
+    high=Column(DECIMAL(20,12))
+    opening_price=Column(DECIMAL(20,12))   
     setOfRequest_id = Column(Integer, ForeignKey("setOfRequest.id"))
 
 
